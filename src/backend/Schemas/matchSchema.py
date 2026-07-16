@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import List
-from schemas.prediction_schema import Prediction
+from Schemas.predictionSchema import PredictionResponse
 
 
 class MatchResponse(BaseModel):
@@ -9,5 +9,5 @@ class MatchResponse(BaseModel):
     awayTeam: str
     matchWinner: str | None
     league: str
-    prediction: Prediction
+    prediction: PredictionResponse 
     

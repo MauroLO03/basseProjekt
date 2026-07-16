@@ -5,7 +5,7 @@ import { useMatchStore } from "../stores/matchStore";
 const matchStore = useMatchStore();
 
 onMounted(async () => {
-  await matchStore.fetchMatch();
+  await matchStore.fetchMatch(381);
 });
 </script>
 

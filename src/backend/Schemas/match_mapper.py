@@ -1,5 +1,5 @@
 
-from schemas import MatchResponse
+from Schemas.matchSchema import MatchResponse
 
 
 def match_to_response(match, prediction):

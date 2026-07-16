@@ -3,19 +3,15 @@ from services import matchService
 
 class MatchController:
     @staticmethod
-    def get_match(request_data: dict):
-        # 1. Extract IDs or data from the incoming request
-        match_id = request_data.get("match_id")
-
+    def get_match(match_id: int):
         
-        # 2. Call the service to fetch the actual team objects/data
-        match_info = matchService.get_match_by_id(match_id)
+        match_info  = matchService.get_match_by_id(match_id)
 
         
         # 3. Combine the data into a single dictionary payload
         response_content = {
-            "home_team": match_info.home_team,
-            "away_team": match_info.away_team
+            "homeTeam": match_info.home_team,
+            "awayTeam": match_info.away_team
         }
         
         # 4. Return the Response with the structured content

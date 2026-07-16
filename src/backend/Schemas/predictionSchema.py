@@ -1,14 +1,6 @@
 from pydantic import BaseModel
 from typing import List
 
-class PredictionResponse(BaseModel):
-    matchWinner: WinnerOdds
-    halfTimeFullTime: HalfTimeFullTimeOdds
-    goals: GoalsOdds
-    corners: CornerOdds
-    cards: CardOdds
-    bothTeamsScored: BothTeamsScoredOdds
-
 class WinnerOdds(BaseModel):
     home: float
     draw: float
@@ -53,3 +45,10 @@ class BothTeamsScoredOdds(BaseModel):
     yes: float
     no: float
 
+class PredictionResponse(BaseModel):
+    matchWinner: WinnerOdds
+    halfTimeFullTime: HalfTimeFullTimeOdds
+    goals: GoalsOdds
+    corners: CornerOdds
+    cards: CardOdds
+    bothTeamsScored: BothTeamsScoredOdds

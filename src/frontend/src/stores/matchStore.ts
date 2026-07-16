@@ -10,11 +10,11 @@ export const useMatchStore = defineStore('matchStore', {
     }),
 
     actions: {
-        async fetchMatch() {
+        async fetchMatch(matchID: number) {
             this.isLoading = true;
             this.error = null;
             try{
-                const response = await axios.get<Match>('http://localhost:8000/api/match');
+                const response = await axios.get<Match>(`http://localhost:8000/api/matches/${matchID}`);
                 this.match = response.data;
             }catch(error: any){
                 console.error('Error fetching match:', error);
