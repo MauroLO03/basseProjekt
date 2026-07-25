@@ -1,4 +1,5 @@
 from scipy.stats import poisson
+from domains.predictions.matchWinnerDomain import MatchWinnerPrediction
 
 MAX_GOALS = 8 
 
@@ -66,10 +67,9 @@ def build_score_matrix(
     return matrix
 
 
-#transforms all possible scorelines into three outcomes (1/X/2)
 def calculate_match_probabilities(
         score_matrix: list[list[float]]
-) -> dict:
+) -> MatchWinnerPrediction:
     home_win = 0.0
     draw = 0.0
     away_win = 0.0
@@ -86,21 +86,8 @@ def calculate_match_probabilities(
             else:
                 away_win += probability
             
-    return{  #överväg att skapa en datatyp för detta objekt och returnera den
-        "1": home_win  ,
-        "X": draw,
-        "2": away_win
-    }
-
-def probabilities_to_odds(
-        probabilities: dict[str,float]
-)-> dict[str, float]:
-    
-    odds = {}
-
-    for outcome, probability in probabilities.items():
-        odds[outcome] = round(
-            1/probability,
-            2
-        )
-    return odds
+    return MatchWinnerPrediction(
+        home = home_win,
+        draw= draw,
+        away = away_win
+    )

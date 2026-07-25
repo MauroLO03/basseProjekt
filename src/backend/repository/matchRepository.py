@@ -21,8 +21,8 @@ class MatchRepository:
                     id = row[0],
                     league_id=row[1],
                     date=row[2],
-                    home_team = row[3],
-                    away_team = row[4],
+                    home_team_id = row[3],
+                    away_team_id = row[4],
                     referee=row[5]
                 )
         finally:

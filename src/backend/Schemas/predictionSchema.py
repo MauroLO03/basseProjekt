@@ -47,8 +47,3 @@ class BothTeamsScoredOdds(BaseModel):
 
 class PredictionResponse(BaseModel):
     matchWinner: WinnerOdds
-    halfTimeFullTime: HalfTimeFullTimeOdds
-    goals: GoalsOdds
-    corners: CornerOdds
-    cards: CardOdds
-    bothTeamsScored: BothTeamsScoredOdds

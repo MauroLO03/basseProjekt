@@ -5,9 +5,9 @@ from Schemas.predictionSchema import PredictionResponse
 
 class MatchResponse(BaseModel):
     id: int
-    homeTeam: str
-    awayTeam: str
-    matchWinner: str | None
-    league: str
+    homeTeamId: int
+    awayTeamId: int
+    leagueId: int
+    date: str
     prediction: PredictionResponse 
     

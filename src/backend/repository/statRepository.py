@@ -225,3 +225,17 @@ class StatRepository:
 
         finally:
             conn.close()
+
+    @staticmethod
+    def get_league_total_goal_average() -> float:
+        conn = get_connection()
+        try:
+            with conn.cursor() as cursor:
+                query = """
+                    SELECT AVG(s.fthg + s.ftag)
+                    FROM match_results_stats s;
+                """
+                cursor.execute(query)
+                return float(cursor.fetchone()[0])
+        finally:
+            conn.close()

@@ -1,14 +1,25 @@
 
 from Schemas.matchSchema import MatchResponse
+from Schemas.predictionSchema import PredictionResponse, WinnerOdds
 
 
 def match_to_response(match, prediction):
 
-    return MatchResponse(
+
+    response = MatchResponse(
         id=match.id,
-        homeTeam=match.home_team,
-        awayTeam=match.away_team,
-        matchWinner=match.match_winner,
-        league=match.league,
-        prediction=prediction
+        homeTeamId=match.home_team_id,
+        awayTeamId=match.away_team_id,
+        leagueId=match.league_id,
+        date=str(match.date),
+        prediction=PredictionResponse(
+            matchWinner=WinnerOdds(
+                home=prediction.matchWinner.home,
+                draw=prediction.matchWinner.draw,
+                away=prediction.matchWinner.away
+            )
+        )
     )
+
+
+    return response
