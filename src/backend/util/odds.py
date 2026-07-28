@@ -5,7 +5,7 @@ def probability_to_odds(
 ) -> float:
 
     if probability <= 0:
-        return 0
+        return 0    
 
     return round(1 / probability, 2)    
 

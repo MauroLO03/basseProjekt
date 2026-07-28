@@ -10,7 +10,9 @@ def get_match_prediction(match_id: int):
     try:
         return MatchService.get_match_by_id(match_id)
     except ValueError as e:
-        raise HTTPException(status_code=404, detail=str(e)) 
+        # 👈 PRINT THIS! This will show you the exact text from raise ValueError(...)
+        print(f" VALUE ERROR IN ROUTE: {str(e)}")
+        raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
-        print(f"🔴 DATABASE/SERVER CRASH DETAILS: {str(e)}")
+        print(f" UNEXPECTED ERROR: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal Server Error")

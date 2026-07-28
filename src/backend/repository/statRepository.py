@@ -154,21 +154,20 @@ class StatRepository:
             with conn.cursor() as cursor:
 
                 query = """
-                    SELECT COALESCE(
-                        AVG(
+                    SELECT AVG(win)
+                    FROM (
+                        SELECT
                             CASE
-                                WHEN s.ftag > s.fthg THEN 1
+                                WHEN s.fthg > s.ftag THEN 1
                                 ELSE 0
-                            END
-                        ),
-                        0
-                    )
-                    FROM matches m
-                    JOIN match_results_stats s
-                        ON m.match_id = s.match_id
-                    WHERE m.away_team_id = %s
-                    ORDER BY m.match_date DESC
-                    LIMIT %s;
+                            END AS win
+                        FROM matches m
+                        JOIN match_results_stats s
+                            ON m.match_id = s.match_id
+                        WHERE m.home_team_id = %s
+                        ORDER BY m.match_date DESC
+                        LIMIT %s
+                    ) recent_matches;
                 """
 
                 cursor.execute(
@@ -237,5 +236,41 @@ class StatRepository:
                 """
                 cursor.execute(query)
                 return float(cursor.fetchone()[0])
+        finally:
+            conn.close()
+
+
+    @staticmethod
+    def get_team_htft_probabilities (team_id: int, venue: str, num_matches: int) -> list[tuple]:
+        conn = get_connection()
+        try: 
+            with conn.cursor() as cursor:
+                query = """
+                    WITH recent_matches AS (
+                        SELECT *
+                        FROM team_match_history
+                        WHERE team_id = %s
+                        AND venue = %s
+                        ORDER BY match_date DESC
+                        LIMIT %s
+                    )
+
+                    SELECT
+                        ht_ft_combo,
+                        COUNT(*) AS occurrences,
+                        COUNT(*) * 1.0 / SUM(COUNT(*)) OVER() AS probability
+                    FROM recent_matches
+                    GROUP BY ht_ft_combo
+                    ORDER BY probability DESC;
+                    """
+
+                cursor.execute(
+                    query,
+                    (team_id,
+                     venue,
+                     num_matches)
+                )
+
+                return cursor.fetchall()
         finally:
             conn.close()

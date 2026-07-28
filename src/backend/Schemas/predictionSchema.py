@@ -6,16 +6,23 @@ class WinnerOdds(BaseModel):
     draw: float
     away: float
 
+class HtFtProbability(BaseModel):
+    htft_1_1: float
+    htft_1_x: float
+    htft_1_2: float
+
+    htft_x_1: float
+    htft_x_x: float
+    htft_x_2: float
+
+    htft_2_1: float
+    htft_2_x: float
+    htft_2_2: float
+
+
 class HalfTimeFullTimeOdds(BaseModel):
-    homeHome: float
-    homeDraw: float
-    homeAway: float
-    drawHome: float
-    drawDraw: float
-    drawAway: float
-    awayHome: float
-    awayDraw: float
-    awayAway: float
+    home: HtFtProbability
+    away: HtFtProbability    
 
 class GoalLine(BaseModel):
     line: float
@@ -47,3 +54,4 @@ class BothTeamsScoredOdds(BaseModel):
 
 class PredictionResponse(BaseModel):
     matchWinner: WinnerOdds
+    htFtProbabilities: HalfTimeFullTimeOdds
