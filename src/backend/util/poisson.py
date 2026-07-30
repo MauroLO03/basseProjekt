@@ -4,10 +4,7 @@ from domains.predictions.matchWinnerDomain import MatchWinnerPrediction
 MAX_GOALS = 8 
 
 #calculates how strong the teams offensive is relative to the rest of the league
-def calculate_attack_strength(
-        team_goals_scored: float, 
-        league_average_goals: float
-        ) -> float:
+def calculate_attack_strength(team_goals_scored: float, league_average_goals: float) -> float:
  
     if league_average_goals == 0:
         return 0
@@ -16,10 +13,7 @@ def calculate_attack_strength(
 
 
 #calculates how strong a teams defense is relative to the reest of the league
-def calculate_defense_strength(
-        team_goals_conceded: float, 
-        league_average_goals: float
-) -> float:
+def calculate_defense_strength(team_goals_conceded: float, league_average_goals: float) -> float:
     if league_average_goals == 0:
         return 0
     
@@ -27,19 +21,12 @@ def calculate_defense_strength(
     
 
 #calculates how many goals a team is expected to score on their opponent (lambda)
-def calculate_expected_goals(
-        attack_strength: float, 
-        opponent_defense_strength: float,
-        league_average_goals: float
-        )-> float:
+def calculate_expected_goals(attack_strength: float, opponent_defense_strength: float,league_average_goals: float)-> float:
     return( attack_strength * opponent_defense_strength * league_average_goals)
 
 
 #creates the poisson distribution up to 8 goals
-def calculate_goal_probabilities(
-        expected_goals: float,
-        max_goals: int = MAX_GOALS
-) ->list[float]:
+def calculate_poisson_goal_distribution(expected_goals: float, max_goals: int = MAX_GOALS) ->list[float]:
     
     return poisson.pmf(
         range(max_goals+1),
@@ -48,10 +35,7 @@ def calculate_goal_probabilities(
 
 
 #creates the probability of every possible scoreline
-def build_score_matrix(
-        home_probabilities: list[float],
-        away_probabilities: list[float]
-)-> list[list[float]]:
+def build_score_matrix(home_probabilities: list[float],away_probabilities: list[float])-> list[list[float]]:
     
     matrix = []
 
