@@ -18,17 +18,17 @@ SELECT
     r.ftag AS ft_against,
 
 
-    -- HÖRNOR
+    -- CORNERS
     r.home_corners AS corners_for,
     r.away_corners AS corners_against,
 
 
-    -- KORT
-    r.home_yellow_cards AS yellow_cards_for,
-    r.away_yellow_cards AS yellow_cards_against,
+    -- CARDS
+    r.home_yellow AS yellow_cards_for,
+    r.away_yellow AS yellow_cards_against,
 
-    r.home_red_cards AS red_cards_for,
-    r.away_red_cards AS red_cards_against,
+    r.home_red AS red_cards_for,
+    r.away_red AS red_cards_against,
 
 
     CASE
@@ -65,7 +65,9 @@ JOIN match_results_stats r
 ON m.match_id = r.match_id
 
 
+
 UNION ALL
+
 
 
 -- AWAY teams
@@ -87,17 +89,17 @@ SELECT
     r.fthg AS ft_against,
 
 
-    -- HÖRNOR
+    -- CORNERS
     r.away_corners AS corners_for,
     r.home_corners AS corners_against,
 
 
-    -- KORT
-    r.away_yellow_cards AS yellow_cards_for,
-    r.home_yellow_cards AS yellow_cards_against,
+    -- CARDS
+    r.away_yellow AS yellow_cards_for,
+    r.home_yellow AS yellow_cards_against,
 
-    r.away_red_cards AS red_cards_for,
-    r.home_red_cards AS red_cards_against,
+    r.away_red AS red_cards_for,
+    r.home_red AS red_cards_against,
 
 
     CASE
