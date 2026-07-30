@@ -1,6 +1,7 @@
 from app.Schemas.matchSchema import MatchResponse
 from app.Schemas.predictionSchema import PredictionResponse, WinnerOdds, HalfTimeFullTimeOdds
-from app.Schemas.predictionSchema import GoalsOdds, GoalLine
+from app.Schemas.predictionSchema import (GoalsOdds, GoalLine,CornerOdds,CornerLine)
+from app.Schemas.predictionSchema import CardOdds, CardLine
 
 def match_to_response(match, prediction) -> MatchResponse:
     match_id = getattr(match, "id", None) or getattr(match, "match_id", None)
@@ -40,6 +41,28 @@ def match_to_response(match, prediction) -> MatchResponse:
     ]
 )
 
+    corner_data = CornerOdds(
+    overUnder=[
+        CornerLine(
+            line=item.line,
+            over=item.over,
+            under=item.under
+        )
+        for item in prediction.cornerOdds.overUnder
+    ]
+)
+
+    card_data = CardOdds(
+        overUnder=[
+            CardLine(
+                line=item.line,
+                over=item.over,
+                under=item.under
+            )
+            for item in prediction.yellowCardOdds.overUnder
+        ]
+    )
+
     return MatchResponse(
         id=match_id,
         homeTeamId=match.home_team_id,
@@ -49,6 +72,8 @@ def match_to_response(match, prediction) -> MatchResponse:
         prediction=PredictionResponse(
             matchWinner=winner_odds,
             htFtOdds=ht_ft_value,
-            overUnderOdds=over_under_data
+            overUnderOdds=over_under_data,
+            cornerOdds=corner_data,
+            yellowCardOdds=card_data
         )
     )

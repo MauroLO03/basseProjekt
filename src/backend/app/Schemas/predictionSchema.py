@@ -1,10 +1,12 @@
 from pydantic import BaseModel
 from typing import List
 
+
 class WinnerOdds(BaseModel):
     home: float
     draw: float
     away: float
+
 
 class HtFtProbability(BaseModel):
     htft_1_1: float
@@ -19,8 +21,9 @@ class HtFtProbability(BaseModel):
     htft_2_x: float
     htft_2_2: float
 
+
 class GoalLine(BaseModel):
-    line:float
+    line: float
     over: float
     under: float
 
@@ -29,7 +32,7 @@ class GoalsOdds(BaseModel):
 
 class HalfTimeFullTimeOdds(BaseModel):
     home: HtFtProbability
-    away: HtFtProbability    
+    away: HtFtProbability
 
 
 class CornerLine(BaseModel):
@@ -56,3 +59,5 @@ class PredictionResponse(BaseModel):
     matchWinner: WinnerOdds
     htFtOdds: HalfTimeFullTimeOdds
     overUnderOdds: GoalsOdds
+    cornerOdds: CornerOdds
+    yellowCardOdds: CardOdds

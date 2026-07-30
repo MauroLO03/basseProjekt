@@ -70,6 +70,17 @@ class StatRepository:
     def get_away_corners(team_id: int, num_matches: int) -> float:
         return StatRepository._get_stat_average(team_id, "AWAY", num_matches, "corners_for")
 
+
+    @staticmethod
+    def get_home_corners_conceded(team_id: int, num_matches: int) -> float:
+        return StatRepository._get_stat_average(team_id, "HOME", num_matches, "corners_against")
+
+
+    @staticmethod
+    def get_away_corners_conceded(team_id: int, num_matches: int) -> float:
+        return StatRepository._get_stat_average(team_id,"AWAY", num_matches, "corners_against")
+
+
     # --- CARDS ---
 
     @staticmethod
@@ -79,6 +90,36 @@ class StatRepository:
     @staticmethod
     def get_away_yellow_cards(team_id: int, num_matches: int) -> float:
         return StatRepository._get_stat_average(team_id, "AWAY", num_matches, "yellow_cards_for")
+
+    @staticmethod
+    def get_home_red_cards(team_id: int, num_matches: int) -> float:
+        return StatRepository._get_stat_average( team_id,"HOME", num_matches, "red_cards_for")
+
+
+    @staticmethod
+    def get_away_red_cards(team_id: int, num_matches: int) -> float:
+        return StatRepository._get_stat_average(team_id, "AWAY", num_matches, "red_cards_for")
+    # --- CARDS AGAINST ---
+
+    @staticmethod
+    def get_home_yellow_cards_conceded(team_id: int, num_matches: int) -> float:
+        return StatRepository._get_stat_average(team_id,"HOME", num_matches, "yellow_cards_against")
+
+
+    @staticmethod
+    def get_away_yellow_cards_conceded(team_id: int, num_matches: int) -> float:
+        return StatRepository._get_stat_average(team_id, "AWAY", num_matches,"yellow_cards_against")
+
+    @staticmethod
+    def get_home_red_cards_conceded(team_id: int, num_matches: int) -> float:
+        return StatRepository._get_stat_average(team_id,"HOME",num_matches,"red_cards_against"
+        )
+
+
+    @staticmethod
+    def get_away_red_cards_conceded(team_id: int, num_matches: int) -> float:
+        return StatRepository._get_stat_average(team_id,"AWAY", num_matches,"red_cards_against")
+
 
     # --- WIN RATES ---
 
@@ -160,6 +201,91 @@ class StatRepository:
                 return float(cursor.fetchone()[0])
         finally:
             conn.close()
+
+    @staticmethod
+    def get_league_home_corner_average() -> float:
+
+        conn = get_connection()
+
+        try:
+            with conn.cursor() as cursor:
+
+                query = """
+                    SELECT AVG(corners_for)
+                    FROM team_match_history
+                    WHERE venue='HOME';
+                """
+
+                cursor.execute(query)
+
+                return float(cursor.fetchone()[0])
+
+        finally:
+            conn.close()
+
+    @staticmethod
+    def get_league_away_corner_average() -> float:
+
+        conn = get_connection()
+
+        try:
+            with conn.cursor() as cursor:
+
+                query = """
+                    SELECT AVG(corners_for)
+                    FROM team_match_history
+                    WHERE venue='AWAY';
+                """
+
+                cursor.execute(query)
+
+                return float(cursor.fetchone()[0])
+
+        finally:
+            conn.close()
+
+    @staticmethod
+    def get_league_home_yellow_average() -> float:
+
+        conn = get_connection()
+
+        try:
+            with conn.cursor() as cursor:
+
+                query = """
+                    SELECT AVG(yellow_cards_for)
+                    FROM team_match_history
+                    WHERE venue='HOME';
+                """
+
+                cursor.execute(query)
+
+                return float(cursor.fetchone()[0])
+
+        finally:
+            conn.close()
+
+    @staticmethod
+    def get_league_away_yellow_average() -> float:
+
+        conn = get_connection()
+
+        try:
+            with conn.cursor() as cursor:
+
+                query = """
+                    SELECT AVG(yellow_cards_for)
+                    FROM team_match_history
+                    WHERE venue='AWAY';
+                """
+
+                cursor.execute(query)
+
+                return float(cursor.fetchone()[0])
+
+        finally:
+            conn.close()
+
 
     # --- HT/FT PROBABILITIES ---
 

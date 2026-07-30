@@ -7,10 +7,7 @@ from util.odds import (probability_to_odds)
 
 class OverUnderService:
     @staticmethod
-    def _calc_over_under_probability(
-        score_matrix: list[list[float]],
-        line: float
-    ) -> overUnder:
+    def _calc_over_under_probability(score_matrix: list[list[float]], line: float) -> overUnder:
 
         over_probability = 0.0
         under_probability = 0.0
@@ -43,11 +40,8 @@ class OverUnderService:
         over25 = OverUnderService._calc_over_under_probability(score_matrix, 2.5)
         over35 = OverUnderService._calc_over_under_probability(score_matrix, 3.5)
 
-        over15_odds = overUnder(line=over15.line, over=probability_to_odds(over15.over), under=probability_to_odds(over15.under)
-        )
-
+        over15_odds = overUnder(line=over15.line, over=probability_to_odds(over15.over), under=probability_to_odds(over15.under))
         over25_odds = overUnder(line=over25.line, over=probability_to_odds(over25.over), under=probability_to_odds(over25.under))
-
         over35_odds = overUnder(line=over35.line, over=probability_to_odds(over35.over), under=probability_to_odds(over35.under))
 
         return MatchOverUnder(overUnder=[over15_odds, over25_odds, over35_odds])
