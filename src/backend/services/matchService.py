@@ -1,8 +1,8 @@
 from pprint import pprint
 from domains.matchDomain import Match
 from repository.matchRepository import matchRepository
-from Schemas.match_mapper import match_to_response
-from Schemas.matchSchema import MatchResponse
+from backend.app.Schemas.match_mapper import match_to_response
+from backend.app.Schemas.matchSchema import MatchResponse
 from services.predictionService import PredictionService
 
 class MatchService:

@@ -1,5 +1,5 @@
-from Schemas.matchSchema import MatchResponse
-from Schemas.predictionSchema import PredictionResponse, WinnerOdds, HalfTimeFullTimeOdds
+from backend.app.Schemas.matchSchema import MatchResponse
+from backend.app.Schemas.predictionSchema import PredictionResponse, WinnerOdds, HalfTimeFullTimeOdds
 
 
 def match_to_response(match, prediction) -> MatchResponse:
