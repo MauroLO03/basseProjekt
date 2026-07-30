@@ -1,5 +1,4 @@
-
-CREATE VIEW team_match_history AS
+CREATE OR REPLACE VIEW team_match_history AS
 
 -- HOME teams
 SELECT
@@ -18,17 +17,33 @@ SELECT
     r.fthg AS ft_for,
     r.ftag AS ft_against,
 
+
+    -- HÖRNOR
+    r.home_corners AS corners_for,
+    r.away_corners AS corners_against,
+
+
+    -- KORT
+    r.home_yellow_cards AS yellow_cards_for,
+    r.away_yellow_cards AS yellow_cards_against,
+
+    r.home_red_cards AS red_cards_for,
+    r.away_red_cards AS red_cards_against,
+
+
     CASE
         WHEN r.hthg > r.htag THEN '1'
         WHEN r.hthg = r.htag THEN 'X'
         ELSE '2'
     END AS ht_result,
 
+
     CASE
         WHEN r.fthg > r.ftag THEN '1'
         WHEN r.fthg = r.ftag THEN 'X'
         ELSE '2'
     END AS ft_result,
+
 
     CONCAT(
         CASE
@@ -43,6 +58,7 @@ SELECT
             ELSE '2'
         END
     ) AS ht_ft_combo
+
 
 FROM matches m
 JOIN match_results_stats r
@@ -63,23 +79,40 @@ SELECT
 
     'AWAY' AS venue,
 
+
     r.htag AS ht_for,
     r.hthg AS ht_against,
 
     r.ftag AS ft_for,
     r.fthg AS ft_against,
 
+
+    -- HÖRNOR
+    r.away_corners AS corners_for,
+    r.home_corners AS corners_against,
+
+
+    -- KORT
+    r.away_yellow_cards AS yellow_cards_for,
+    r.home_yellow_cards AS yellow_cards_against,
+
+    r.away_red_cards AS red_cards_for,
+    r.home_red_cards AS red_cards_against,
+
+
     CASE
         WHEN r.htag > r.hthg THEN '1'
         WHEN r.htag = r.hthg THEN 'X'
         ELSE '2'
-    END,
+    END AS ht_result,
+
 
     CASE
         WHEN r.ftag > r.fthg THEN '1'
         WHEN r.ftag = r.fthg THEN 'X'
         ELSE '2'
-    END,
+    END AS ft_result,
+
 
     CONCAT(
         CASE
@@ -93,7 +126,8 @@ SELECT
             WHEN r.ftag = r.fthg THEN 'X'
             ELSE '2'
         END
-    )
+    ) AS ht_ft_combo
+
 
 FROM matches m
 JOIN match_results_stats r
