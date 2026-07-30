@@ -5,7 +5,7 @@ from util.poisson import (
     calculate_match_probabilities
 )
 from util.odds import prediction_to_odds
-from backend.services.prediction.xGService import xGCalculator
+from services.prediction.xGService import xGCalculator
 
 
 

@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import List
-from backend.app.Schemas.predictionSchema import PredictionResponse
+from app.Schemas.predictionSchema import PredictionResponse
 
 
 class MatchResponse(BaseModel):

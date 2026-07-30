@@ -19,18 +19,18 @@ class HtFtProbability(BaseModel):
     htft_2_x: float
     htft_2_2: float
 
-
-class HalfTimeFullTimeOdds(BaseModel):
-    home: HtFtProbability
-    away: HtFtProbability    
-
 class GoalLine(BaseModel):
-    line: float
+    line:float
     over: float
     under: float
 
 class GoalsOdds(BaseModel):
     overUnder: List[GoalLine]
+
+class HalfTimeFullTimeOdds(BaseModel):
+    home: HtFtProbability
+    away: HtFtProbability    
+
 
 class CornerLine(BaseModel):
     line: float
@@ -54,4 +54,5 @@ class BothTeamsScoredOdds(BaseModel):
 
 class PredictionResponse(BaseModel):
     matchWinner: WinnerOdds
-    htFtProbabilities: HalfTimeFullTimeOdds
+    htFtOdds: HalfTimeFullTimeOdds
+    overUnderOdds: GoalsOdds

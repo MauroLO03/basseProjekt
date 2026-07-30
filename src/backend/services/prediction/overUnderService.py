@@ -1,9 +1,11 @@
 from services.prediction.xGService import xGCalculator
 from util.poisson import (calculate_poisson_goal_distribution, build_score_matrix)
 from domains.predictions.overUnderDomain import overUnder
+from domains.predictions.matchOverUnderDomain import MatchOverUnder
+from util.odds import (probability_to_odds)
 
 
-class overUnderService:
+class OverUnderService:
     @staticmethod
     def _calc_over_under_probability(
         score_matrix: list[list[float]],
@@ -26,7 +28,7 @@ class overUnderService:
         return overUnder(line, over_probability, under_probability)
 
     @staticmethod
-    def calculate_over_under(home_team_id: int , away_team_id: int, num_matches: int) -> overUnder:
+    def calculate_over_under(home_team_id: int , away_team_id: int, num_matches: int) -> MatchOverUnder:
 
         #beräkna xG
         match_xg =xGCalculator.calculate_match_xG(home_team_id, away_team_id, num_matches)
@@ -37,9 +39,15 @@ class overUnderService:
 
         score_matrix = build_score_matrix(home_prob, away_prob)
 
-        over15 = overUnderService._calc_over_under_probability(score_matrix, 1.5)
-        over25 = overUnderService._calc_over_under_probability(score_matrix, 2.5)
-        over35 = overUnderService._calc_over_under_probability(score_matrix, 3.5)
+        over15 = OverUnderService._calc_over_under_probability(score_matrix, 1.5)
+        over25 = OverUnderService._calc_over_under_probability(score_matrix, 2.5)
+        over35 = OverUnderService._calc_over_under_probability(score_matrix, 3.5)
 
-        return {over15, over25, over35}
+        over15_odds = overUnder(line=over15.line, over=probability_to_odds(over15.over), under=probability_to_odds(over15.under)
+        )
 
+        over25_odds = overUnder(line=over25.line, over=probability_to_odds(over25.over), under=probability_to_odds(over25.under))
+
+        over35_odds = overUnder(line=over35.line, over=probability_to_odds(over35.over), under=probability_to_odds(over35.under))
+
+        return MatchOverUnder(overUnder=[over15_odds, over25_odds, over35_odds])

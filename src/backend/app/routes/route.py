@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from backend.app.Schemas.matchSchema import MatchResponse
+from app.Schemas.matchSchema import MatchResponse
 from services.matchService import MatchService
 
 # Create the router instance
